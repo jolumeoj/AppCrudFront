@@ -1,24 +1,26 @@
+import { useEffect, useState, useRef } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonBackButton } from '@ionic/react';
 
 import './Product.css';
 import { Product } from '../models/Product.model';
-import { useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../shared/hooks';
-import { loadProducts } from '../slices/productSlice';
 import { useHistory } from 'react-router-dom';
+import { loadSelected } from '../slices/lstSelectedSlice';
 
-const Products: React.FC = () => {
-  const productsFromRedux = useAppSelector(state => state.products.list);
-  const statusProducts = useAppSelector(state => state.products.status);
+const Selected: React.FC = () => {
+  const lstSelected = useAppSelector(state => state.lstSelected.list);
   const dispatch = useAppDispatch();
   const history = useHistory();
-  
+  const nav = useRef<HTMLIonNavElement>(null);
+  const modal = useRef<HTMLIonModalElement>(null);
 
   useEffect(() => {
-    dispatch(loadProducts());
+    dispatch(loadSelected(1));
   }, [dispatch]);
 
+  
   const handleCardClick = (cardId: number) => {
+
     history.push(`/products/${cardId}`);
   };
 
@@ -27,7 +29,7 @@ const Products: React.FC = () => {
       <IonHeader>
         <IonToolbar>
         <IonBackButton></IonBackButton>
-          <IonTitle>Productos</IonTitle>
+          <IonTitle>Productos Seleccionados</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -36,8 +38,8 @@ const Products: React.FC = () => {
             <IonTitle size="large">Productos</IonTitle>
           </IonToolbar>
         </IonHeader>
-        {productsFromRedux.length > 0 && productsFromRedux.map(item => (
-        <IonCard key={item.idProduct} button onClick={() => handleCardClick(item.idProduct)}>
+        {lstSelected.length > 0 && lstSelected.map(item => (
+        <IonCard key={item.idProduct}>
           <IonCardHeader>
             <IonCardTitle>{item.productName}</IonCardTitle>
           </IonCardHeader>
@@ -50,4 +52,4 @@ const Products: React.FC = () => {
   );
 };
 
-export default Products;
+export default Selected;

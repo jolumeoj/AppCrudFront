@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonBackButton } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Category.css';
 import { Category } from '../models/Category.model';
@@ -19,6 +19,7 @@ const Categories: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+        <IonBackButton></IonBackButton>
           <IonTitle>Categorias</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -29,7 +30,7 @@ const Categories: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         {categoriesFromRedux.length > 0 && categoriesFromRedux.map(item => (
-        <IonCard>
+        <IonCard key={item.idFeature}>
           <IonCardHeader>
             <IonCardTitle>{item.featureName}</IonCardTitle>
           </IonCardHeader>

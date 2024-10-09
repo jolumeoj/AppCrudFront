@@ -14,6 +14,7 @@ import { ellipse, square, triangle } from 'ionicons/icons';
 import Tab1 from './pages/Product';
 import Tab2 from './pages/Category';
 import Tab3 from './pages/User';
+import Detail from './pages/Detail';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -44,6 +45,7 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import Selected from './pages/Selected';
 
 setupIonicReact();
 
@@ -58,9 +60,6 @@ const App: React.FC = () => (
           <Route exact path="/category">
             <Tab2 />
           </Route>
-          <Route path="/user">
-            <Tab3 />
-          </Route>
           <Route exact path="/">
             <Redirect to="/product" />
           </Route>
@@ -74,12 +73,10 @@ const App: React.FC = () => (
             <IonIcon aria-hidden="true" icon={ellipse} />
             <IonLabel>Categorias</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="User" href="/user">
-            <IonIcon aria-hidden="true" icon={square} />
-            <IonLabel>Usuarios</IonLabel>
-          </IonTabButton>
         </IonTabBar>
       </IonTabs>
+      <Route path="/products/:id" component={Detail} exact />
+      <Route path="/selected" component={Selected} exact />
     </IonReactRouter>
   </IonApp>
 );
